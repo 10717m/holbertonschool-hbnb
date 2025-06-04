@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant PlaceService
+    participant PlaceRepository
+    participant Database
+
+    Client->>API: GET /api/v1/places
+    API->>PlaceService: get_all_places()
+    PlaceService->>PlaceRepository: fetch_all()
+    PlaceRepository->>Database: SELECT * FROM places
+    Database-->>PlaceRepository: return place list
+    PlaceRepository-->>PlaceService: list of places
+    PlaceService-->>API: return formatted list
+    API-->>Client: 200 OK + JSON list of places

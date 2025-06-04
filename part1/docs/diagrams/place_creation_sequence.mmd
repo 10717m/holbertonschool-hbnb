@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant PlaceService
+    participant PlaceRepository
+    participant Database
+
+    Client->>API: POST /api/v1/places
+    API->>PlaceService: validate_and_create_place(data)
+    PlaceService->>PlaceRepository: save(place)
+    PlaceRepository->>Database: INSERT INTO places
+    Database-->>PlaceRepository: success
+    PlaceRepository-->>PlaceService: place_saved
+    PlaceService-->>API: return place object
+    API-->>Client: 201 Created + place info

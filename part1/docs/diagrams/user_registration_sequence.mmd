@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant UserService
+    participant UserRepository
+    participant Database
+
+    Client->>API: POST /api/v1/users/register
+    API->>UserService: validate_and_create_user(data)
+    UserService->>UserRepository: save(user)
+    UserRepository->>Database: INSERT INTO users
+    Database-->>UserRepository: success
+    UserRepository-->>UserService: user_saved
+    UserService-->>API: return user object
+    API-->>Client: 201 Created + user info
+

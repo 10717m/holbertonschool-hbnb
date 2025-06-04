@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant ReviewService
+    participant ReviewRepository
+    participant Database
+
+    Client->>API: POST /api/v1/reviews
+    API->>ReviewService: validate_and_create_review(data)
+    ReviewService->>ReviewRepository: save(review)
+    ReviewRepository->>Database: INSERT INTO reviews
+    Database-->>ReviewRepository: success
+    ReviewRepository-->>ReviewService: review_saved
+    ReviewService-->>API: return review object
+    API-->>Client: 201 Created + review info
