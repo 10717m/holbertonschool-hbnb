@@ -1,0 +1,46 @@
+classDiagram
+
+class BaseModel {
+    +UUID id
+    +DateTime created_at
+    +DateTime updated_at
+    +save()
+    +to_dict()
+}
+
+class User {
+    +string email
+    +string password
+    +string first_name
+    +string last_name
+}
+
+class Place {
+    +string name
+    +string description
+    +int number_rooms
+    +int number_bathrooms
+    +int max_guest
+    +int price_by_night
+    +float latitude
+    +float longitude
+}
+
+class Review {
+    +string text
+}
+
+class Amenity {
+    +string name
+}
+
+BaseModel <|-- User
+BaseModel <|-- Place
+BaseModel <|-- Review
+BaseModel <|-- Amenity
+
+User "1" --> "many" Place : owns >
+Place "1" --> "many" Review : has >
+User "1" --> "many" Review : writes >
+Place "many" -- "many" Amenity : includes >
+
